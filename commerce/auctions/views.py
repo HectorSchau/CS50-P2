@@ -138,6 +138,11 @@ def auction2(request, auction_id, slug):
         print(bid_1.auction)
         print(bid_1.amount)
         Auction.objects.filter(pk=auction.id).update(status="I", win=bid_1.user)
+        actualuser=request.user
+        print(request.user)
+        return render(request, "auctions/myauctions.html", {
+            #"auctions": Auction.objects.all().filter(status='A').filter(creator=2)
+            "auctions": Auction.objects.filter(creator__username=actualuser.username)})
 
     if slug!="bid":
         print("slug!=bid")
