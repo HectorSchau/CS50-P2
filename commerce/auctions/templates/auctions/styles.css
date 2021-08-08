@@ -1,0 +1,14 @@
+body {
+    padding: 10px;
+}
+
+.title {
+	color: blue;
+	margin: 50px;
+	text-align: center;
+}
+.picture {
+	width: 300px;
+	border-radius: 50%;
+	height: 200px;
+}

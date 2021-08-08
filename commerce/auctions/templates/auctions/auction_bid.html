@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Add a Bid...</h2>
+    {% if submitted %}
+        <p class="success">
+         Your message was submitted successfully. Thank you.
+        </p>
+    {% else %}
+        
+    <form action="" method="post" novalidate>        
+        {% if txt == "Your bid cannot be lower than the actual price..."%}
+        <div class="alert alert-danger" role="alert">
+            Current Price: ${{ price }} - {{ txt }}
+          </div>   
+        {% else %}  
+            Current Price: ${{ price }} - {{ txt }}
+        {% endif %}
+        <table class="table table-hover table-dark">
+        {{ form.as_table }}
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Submit"></td>
+            </tr>
+        </table>
+        {% csrf_token %}
+    </form>
+    {% endif %}
+{% endblock %}

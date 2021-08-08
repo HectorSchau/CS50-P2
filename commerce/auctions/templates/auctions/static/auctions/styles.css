@@ -1,0 +1,13 @@
+body {
+    padding: 10px;
+}
+
+.title {
+	margin: 50px;
+	text-align: center;
+}
+.picture {
+	width: 100px;
+	border-radius: 50%;
+	height: 200px;
+}

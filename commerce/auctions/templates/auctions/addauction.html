@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <div class="container-m-4" style="background-color: rgba(0, 0, 0, 0.1);">
+    <h2>Add Auction</h2>
+    {% if submitted %}
+        <p class="success">
+         Your message was submitted successfully. Thank you.
+        </p>
+    {% else %}
+
+    <form action="" method="post" novalidate>        
+        <table class="table table-hover table-dark">
+        {{ form.as_table }}
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Submit"></td>
+            </tr>
+        </table>
+        {% csrf_token %}
+    </form>
+    {% endif %}
+    </div>
+{% endblock %}

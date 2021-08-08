@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>My Watchlist Page</h2>
+    <ul>
+        {% for auction in auctions %}
+
+            <li>
+                <img src="{{ auction.URLimage }}" width="100" height="auto">
+                <a href="{% url 'auction' auction.id %}">
+                    {% if auction.status != 'I' %}
+                        Auction {{ auction.id }}: {{ auction.title }} - {{ auction.descrip }} $ {{ auction.currentprice }} / Creator: {{ auction.creator }} - {{auction.status}}
+                    {% else %}
+                        Auction {{ auction.id }}: {{ auction.title }} - {{ auction.descrip }} $ {{ auction.currentprice }} / Creator: {{ auction.creator }} - {{auction.status}} [CLOSED]
+                    {% endif %}
+                </a>
+            </li>
+
+        {% endfor %}
+    </ul>
+{% endblock %}

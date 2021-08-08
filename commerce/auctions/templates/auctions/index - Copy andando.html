@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>        
+<!--    <ul>-->
+    <div class="row">
+        <div class="col-sm-3">
+            
+            {% for auction in auctions %}            
+<!--            <li>
+                <img src="{{ auction.URLimage }}" width="100" height="auto">
+                <a href="{% url 'auction' auction.id %}">
+                    Auction {{ auction.id }}: {{ auction.title }} - {{ auction.descrip }} $ {{ auction.currentprice }} / Creator: {{ auction.creator }}
+                </a>
+            </li>-->
+            
+            <div class="card">
+                <img class="card-img-top" src="{{ auction.URLimage }}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{ auction.title }}</h5>
+                  <p class="card-text">{{ auction.descrip }}</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>            
+            {% endfor %}
+            
+        </div>
+    </div>    
+<!--    </ul>-->
+{% endblock %}

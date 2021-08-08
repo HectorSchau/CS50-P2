@@ -1,7 +1,42 @@
 {% extends "auctions/layout.html" %}
 
-{% block body %}
-    <h2>Active Listings</h2>
+{% block body %}           
+<!--    <ul>-->
+    <div class="container-fluid" style="background-color: rgba(0, 0, 0, 0);">
+        <!--<div class="row">-->
+            <div class="mx-auto" style="width: 400px;"><h2><strong>Active Listings</strong></h2></div>
+            <div class="row-m-2 justify-content-center" >                
 
-    TODO
+                <div class="col-m-2">
+                    <div class="row">
+                        {% for auction in auctions %}
+                        
+                        <div class="card text-center bg-light m-3 border-dark" style="width: 20rem;padding: 1%;">
+                            <div class="card-header"><strong><h4>{{ auction.title }}</h4></strong></div>
+                            <img class="card-img-top" src="{{ auction.URLimage }}"></a>
+
+                            <div class="card-body">
+                                <!--<a href="{% url 'auction' auction.id %}"></a>
+                                <a href="{% url 'auction' auction.id %}" class="btn btn-primary">{{ auction.title }}</a>-->
+                                <!--<h5 class="card-title">{{ auction.title }}</h5>-->
+                                <div class="card-text">{{ auction.descrip }}</div>
+
+                                <!--<p class="card-text"><small class="text-muted"><h3>$ {{ auction.currentprice }}</h3></small></p>-->
+                                <a href="{% url 'auction' auction.id %}" class="stretched-link"></a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <h4><strong>$ {{ auction.currentprice }}</strong></h4>
+                              </div>
+                        </div>
+                        
+                        {% endfor %}
+                    </div>    
+                </div>
+
+
+                
+            </div>
+        <!--</div>-->
+    </div>
+<!--    </ul>-->
 {% endblock %}

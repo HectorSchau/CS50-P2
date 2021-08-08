@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Items by Category</h2>
+    <ul>
+        {% for auction in auctions %}            
+            <!--<li>
+                <img src="{{ auction.URLimage }}" width="100" height="auto">
+                <a href="{% url 'auction' auction.id %}">
+                    {% if auction.status != 'I' %}
+                        Auction {{ auction.id }}: {{ auction.title }} - {{ auction.descrip }} $ {{ auction.currentprice }} / Creator: {{ auction.creator }} - {{auction.status}}
+                    {% else %}
+                        Auction {{ auction.id }}: {{ auction.title }} - {{ auction.descrip }} $ {{ auction.currentprice }} / Creator: {{ auction.creator }} - {{auction.status}} <span class="badge badge-pill badge-danger">CLOSED</span>
+                    {% endif %}
+                </a>
+            </li>-->
+            <div class="card mb-3 w-75">
+                <div class="row g-0">
+                    <div class="col-md-4 rounded mx-auto d-block">
+                        <img src="{{ auction.URLimage }}" class="img-fluid rounded-start" width="150" height="auto">
+                        <a href="{% url 'auction' auction.id %}" class="stretched-link"></a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Auction #{{ auction.id }}</h5>
+                            <p class="card-text"><strong>{{ auction.title }}</strong><br>{{ auction.descrip }}<br>Current Price: $ {{ auction.currentprice }}<br>Creator: {{ auction.creator }}</p>
+                            {% if auction.status != 'A' %}
+                                <span class="badge badge-pill badge-danger">CLOSED</span>        
+                            {% endif %}
+                            <a href="{% url 'auction' auction.id %}" class="stretched-link"></a>
+                            <p class="card-text"><small class="text-muted">Status: {{auction.status}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        {% endfor %}
+    </ul>
+{% endblock %}

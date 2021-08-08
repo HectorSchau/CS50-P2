@@ -1,0 +1,115 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="container-m-4" style="background-color: rgba(0, 0, 0, 0);">
+    <div class="row justify-content-around">
+        <div class="card-deck">
+            <!--<div class="col-4-p-2">   -->             
+                <div class="card p-2 text-center" style="width: 30rem;">
+                    <div class="card-body">
+                        <div style="width:100%; text-align:center">
+                            <img src="{{ auction.URLimage }}" width="400" height="auto">
+                        </div>
+                        <!--<img src="{{ auction.URLimage }}" width="400" height="auto">   style="width:50%; height:50%;
+                        <div class="card-footer">
+                            <small class="text-muted"></small>
+                        </div>-->                              
+                    </div><!-- Card Body-->    
+                    <div class="card-footer text-muted">
+                        <h4><strong></strong></h4>
+                    </div>              
+                </div><!-- Card -->
+            </div><!-- Col -->    
+        
+            <!--<div class="col-4-m-1">-->    
+                <div class="card p-2 text-center" style="width: 30rem;">
+                    <div class="card-header bg-transparent border-success">
+                        <h2>{{ auction.title }}</h2>
+                    </div>
+                    <div class="card-body">
+                        {% if user.is_authenticated %}
+                            <!-- Signed in as <strong>{{ user.username }}</strong>. -->        
+                            {% if sameuser %}
+                                {% if auction.status == 'A' %}
+                                   <p style="color:yellowgreen">You are the owner of this auction. <a href="{% url 'auction2' auction.id 'close' %}">[Close Auction]</a></p><br>                
+                                {% else %}
+                                    <p style="color:green">You are the owner of this auction. This auction is already closed. The winner was: {{ auction.win }}</p><br>
+                                {% endif %}
+                            {% else %}
+                                {% if watchlist %}
+                                    <!--<p style="color:green">You are following this auction. <a href="{% url 'auction2' auction.id 'unfollow' %}">[Unfollow]</a></p><br>
+                                    <div class="alert alert-success" role="alert">You are following this auction. <a href="{% url 'auction2' auction.id 'unfollow' %}" class="alert-link">[Unfollow]</a>.</div>-->
+                                    <a href="{% url 'auction2' auction.id 'unfollow' %}" class="badge badge-primary"><h5>Unfollow</h5></a>
+                                {% else %}    
+                                    <!--<p style="color:red">You are not following this auction. <a href="{% url 'auction2' auction.id 'follow' %}">[Follow]</a></p><br>-->
+                                    <a href="{% url 'auction2' auction.id 'follow' %}" class="badge badge-primary"><h5>Follow</h5></a>                            
+                                {% endif %}
+                                {% if auction.status == 'I' %}
+                                    {% if winnerisonline  %}
+                                        <p style="color:red">This auction is closed and you are the Winner. Congrats!!!.</p><br>
+                                    {% endif %}    
+                                {% else %}    
+                                    <!-- Biding
+                                    <p style="color:green">Add a bid to this auction... <a href="{% url 'auction2' auction.id 'bid' %}">[Bid]</a></p><br>-->
+                                    <a href="{% url 'auction2' auction.id 'bid' %}" class="badge badge-warning"><h5>Bid</h5></a>
+                                {% endif %}
+                            {% endif %}            
+                        {% else %}
+                            Sign in to add to your watchlist
+                        {% endif %}
+                        <!--<h4>{{ auction.descrip }}</h4>-->
+                        <p class="card-text">{{ auction.descrip }}</p>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <h4 class="card-title">Current Price: <strong>${{ auction.currentprice }}</strong></h4>
+                        <p class="card-text"><strong>Starting Bid:</strong> ${{ auction.startingbid }}. <strong>Total of bids:</strong> {{ bids.count }}</p>
+                        <p class="card-text"><strong>Status:</strong> {{ auction.get_status_display }}<br><strong>Date & Time Started:</strong> {{ auction.DaT_started }}<br><strong>Creator:</strong> {{ auction.creator.username }}<br><strong>Category:</strong> {{ auction.category.desc }}</p>            
+                    </div><!-- Card Body-->
+                    <div class="card-footer text-muted">
+                        <h4><strong></strong></h4>
+                    </div>                                                 
+                </div><!-- Card -->
+            <!--</div> Col -->
+
+            <!--<div class="col-4-m-1">-->
+                <div class="card p-2">
+                    <div class="card-body">
+                        {% if bids.count > 0 %}
+                            <h3 class="card-title">Bid History: <strong>({{bids.count}} bids)</strong></h3>
+                            <ul>
+                            {% for bid in bids %}            
+                                <li>
+                                    <p class="card-text"><strong>$ {{ bid.amount }}</strong> by {{ bid.user }} at {{ bid.DaT_started }}</p>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="card-text"><strong>This auctions doesn't have any bids yet</strong></p>
+                        {% endif %}
+                        <!--<p style="color:green">Add a comment to this auction... <a href="{% url 'auction2' auction.id 'comment' %}">[Add a Comment]</a></p><br>-->
+                        {% if user.is_authenticated %}
+                            <div class="alert alert-success" role="alert">Add a comment to this auction...  <a href="{% url 'auction2' auction.id 'comment' %}" class="alert-link">[Add a Comment]</a>.</div>
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">You need to Login to add a comment to this auction...</div>
+                        {% endif %}
+                        {% if comments.count > 0 %}
+                            <h3>Comments History: ({{comments.count}} comments)</h3>
+                            <ul>
+                                {% for comment in comments %}            
+                                <li>
+                                    {{ comment.desc }} by {{ comment.user }} at {{ comment.DaT_started }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="card-text">Be the first person in comment!</p>
+                        {% endif %}
+                    </div> <!--Card Body-->
+                    <div class="card-footer text-muted">
+                        <h4><strong></strong></h4>
+                    </div>     
+                </div><!-- Card -->
+            <!--</div>  Col -->
+        </div> <!-- Card Deck -->
+    </div> <!-- "row justify-content -->
+</div> <!-- container -->
+{% endblock %}
